@@ -26,7 +26,9 @@ class Home extends Component<HomeProps,HomeState > {
   static options = {
     addGlobalClass: true
   }
-  static defaultProps:HomeProps = {};
+  static defaultProps:HomeProps = {
+
+  };
 
 
 

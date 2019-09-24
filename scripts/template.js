@@ -5,6 +5,7 @@
 
 const fs = require('fs');
 
+
 const dirName = process.argv[2];
 const capPirName = dirName.substring(0, 1).toUpperCase() + dirName.substring(1);
 if (!dirName) {
@@ -25,7 +26,7 @@ import './${dirName}.less'
 // import { } from '../../components'
 
 // @connect(({ ${dirName} }) => ({
-//     ...${dirName},
+//     ${dirName},
 // }))
 
 class ${capPirName} extends Component<${capPirName}Props,${capPirName}State > {
@@ -64,7 +65,7 @@ ${dirName}-wrap {
 
 // 接口请求模板
 const serviceTep = `
-// import {post,get} from '../../utils/request'
+// import {Api} from '../../utils/request'
 `
 
 //model模板
@@ -77,9 +78,10 @@ export default {
   state: {
   },
 
-  effects: {},
 
-  reducers: {}
+  reducers: {},
+  
+  effects: {}
 
 }
 `

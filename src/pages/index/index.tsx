@@ -6,8 +6,6 @@ import { connect } from '@tarojs/redux'
 import { IndexProps, IndexState } from './index.interface'
 import './index.less'
 import {SHAREINFO} from "@/config/index";
-import {AtButton, AtFab} from "taro-ui";
-import Api from '../../utils/request'
 import MyTabBar from "@/components/MyTabBar/MyTabBar";
 import My from '@/page_components/my/my';
 import ShopCar from '@/page_components/shopCar/shopCar';
@@ -17,7 +15,7 @@ import Home from '@/page_components/home/home'
 // import { } from '../../components'
 
 @connect(({ index }) => ({
-    ...index,
+    index,
 }))
 
 class Index extends Component<IndexProps,IndexState > {
@@ -45,9 +43,8 @@ class Index extends Component<IndexProps,IndexState > {
     console.log('在触发距离内滑动期间，本事件只会被触发一次')
   }
 
-
   componentDidMount() {
-    Api.get('/')
+    // Api.get('/')
     // console.log(globalData)
     // Taro.login({
     //   //登陆成功
@@ -82,81 +79,23 @@ class Index extends Component<IndexProps,IndexState > {
       return SHAREINFO('分享标题,不是通过右上角')
     }
   }
-  //获取手机号码
-  getPhoneNumber=(event)=>{
-    console.log(event)
-  };
-  //获取地理位置
-  getLocation=()=>{
-    Taro.getLocation({
-      success:(res)=>{
-        console.log(res)
-      },
-      fail:err => {
-        console.log(err)
-      }
-    })
-  }
-  AtfabClick=(Event)=>{
-    console.log(Event)
-  }
 
-  getRequest=()=>{
-    Api.get('/ping').then(res=>{
-      console.log(res)
-    })
-  }
-  handleClick=(v)=>{
-    console.log(v)
-  };
   currentKey=(k:number)=>{
     const TabBarTitleArr:string[]=['首页','分类','推荐','购物车','我的'];
     Taro.setNavigationBarTitle({title:TabBarTitleArr[k]})
     this.setState({current:k})
   };
-  renderTab0=()=>{
-    return (
-      // @ts-ignore
-      <iconfont name="iconicon_add" color="{{['red', 'orange']}}" size="16"/>
-    )
-  }
 
-  renderTab1=()=>{
-    return (
-      <view>
-        <AtButton type='primary' openType={'share'}>分享</AtButton>
-        <AtButton type='secondary' openType={'getPhoneNumber'} onGetPhoneNumber={this.getPhoneNumber}>获取手机号</AtButton>
-        <AtButton type='primary' onClick={this.getLocation}>获取地理位置</AtButton>
-      </view>
-
-    )
-  }
-
-  renderTab2=()=>{
-    return(
-      <view>
-        <View style={{position:'fixed',bottom:0,right:0}} >
-          <AtFab onClick={this.AtfabClick}>
-            {
-              // @ts-ignore
-              <iconfont name="iconicon_down" color='white' size="20"/>
-            }
-          </AtFab>
-        </View>
-        <AtButton type={'secondary'} onClick={this.getRequest}>发送get请求</AtButton>
-
-      </view>
-    )
-  }
   render() {
     // const Iconfont=iconfont;
+    // console.log(this.props.index)
     return (
       <View className='index-wrap'>
-        {this.state.current===0&&<Home/>}
+        {this.state.current===0&&<Home />}
         {this.state.current===1&&<Classify/>}
         {this.state.current===2&&<Recommend/>}
         {this.state.current===3&&<ShopCar/>}
-        {this.state.current===4&&<My/>}
+        {this.state.current===4&&<My dispatch={this.props.dispatch} index={this.props.index}/>}
         <MyTabBar current={this.state.current} onCurrentKey={this.currentKey}/>
       </View>
     )
