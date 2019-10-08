@@ -4,11 +4,15 @@ import { MyProps, MyState } from './my.interface'
 import './my.scss'
 import {AtButton, AtFab} from "taro-ui";
 import Api from "@/utils/request";
+import Tips from "@/utils/tips";
 
-class My extends Component<MyProps,MyState > {
+class My extends Component<MyProps,MyState > {n
+  private animation: Taro.Animation;
   constructor(props: MyProps) {
     super(props)
-    this.state = {}
+    this.state = {
+      animation: [{}]
+    }
   }
   static options = {
     addGlobalClass: true
@@ -18,6 +22,8 @@ class My extends Component<MyProps,MyState > {
     dispatch:null
   }
 
+
+
   AtfabClick=(Event)=>{
     console.log(Event)
   }
@@ -25,6 +31,9 @@ class My extends Component<MyProps,MyState > {
   getRequest=()=>{
     Api.get('/ping').then(res=>{
       console.log(res)
+      if (res.status){
+        Tips.success(JSON.stringify(res.data))
+      }
     })
   }
 
@@ -51,11 +60,38 @@ class My extends Component<MyProps,MyState > {
     )
   }
 
+  componentDidMount(): void {
+    this.animation = Taro.createAnimation({
+      duration:600,
+      timingFunction:'liner',
+      delay:500,
+      transformOrigin:'50% 50% 0'
+    })
+    Taro.getFileInfo({
+      filePath:'',
+    })
+
+  }
+  rotateView=()=>{
+    this.animation.rotate(360).scale(2).step({})
+    this.setState({
+      animation: this.animation.export()   //输出动画
+    })
+  }
+  rotateReverseView=()=>{
+    this.animation.rotate(0).scale(1).step({})
+    this.setState({
+      animation: this.animation.export()   //输出动画
+    })
+  }
   render() {
     return (
       <View className='fx-my-wrap'>
         {this.renderTab2()}
         <AtButton type={'primary'} onClick={this.addCount}>{this.props.index.testCount}</AtButton>
+        <View style={{textAlign:'center'}} animation={this.state.animation}>我要做动画</View>
+        <AtButton onClick={this.rotateView}>点击旋转(一次)</AtButton>
+        <AtButton loading={true} onClick={this.rotateReverseView}>点击还原(一次)</AtButton>
       </View>
     )
   }

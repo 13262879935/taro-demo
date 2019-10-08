@@ -6,7 +6,9 @@ import {IndexProps} from "../../pages/index/index.interface";
  * @export
  * @interface MyState
  */
-export interface MyState {}
+export interface MyState {
+  animation:object[]
+}
 
 /**
  * my.props 参数类型

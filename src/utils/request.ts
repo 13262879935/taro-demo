@@ -1,7 +1,11 @@
-import Taro from '@tarojs/taro'
+import Taro, {request} from '@tarojs/taro'
 import { HTTP_STATUS } from './HttpStatus'
 import { MAINHOST } from '../config'
 import { logError } from './logError'
+import {BasicResponse} from "../types/BasicResponse";
+import Tips from "@/utils/tips";
+
+
 
 const token = ''
 
@@ -13,6 +17,29 @@ interface ParamsType {
   data:Datas|string
   contentType?:string
 }
+async function checkStatus(response:request.Promised<any>):Promise<any>{
+  console.log(111)
+  if (response.statusCode >= HTTP_STATUS.SUCCESS && response.statusCode < HTTP_STATUS.SUCCESSEND) {
+    console.log(response);
+    return response.data;
+  }
+  // @ts-ignore
+  Tips.toast('网络请求状态码出错:' + String(response.statusCode));
+  // notification['error']({
+  //   message: '数据获取出错',
+  //   description: "错误状态码:" + error.name,
+  //   duration: 3,
+  // });
+}
+
+async function checkDataStatus(response:BasicResponse):Promise<BasicResponse> {
+  if (response.status){
+  } else {
+    Tips.toast(response.message)
+  }
+  return response
+}
+
 const baseOptions=(params:ParamsType, method:requestMethod = 'GET')=> {
   let { url, data } = params;
   // let token = getApp().globalData.token
@@ -22,6 +49,7 @@ const baseOptions=(params:ParamsType, method:requestMethod = 'GET')=> {
   const option = {
     // isShowLoading: false,
     // loadingText: '正在加载',
+
     url: MAINHOST + url,
     data: data,
     method: method,
@@ -37,11 +65,12 @@ const baseOptions=(params:ParamsType, method:requestMethod = 'GET')=> {
         return res.data
       }
     },
-    error(e) {
+    fail(e) {
+      console.log(e);
       logError('api', '请求接口出现问题', e)
     }
   }
-  return Taro.request(option)
+  return Taro.request(option).then(checkStatus).then(checkDataStatus)
 };
 
 

@@ -3,6 +3,8 @@ import {Input, Swiper, SwiperItem, View} from '@tarojs/components'
 import { HomeProps, HomeState } from './home.interface'
 import './home.less'
 import {AtIcon} from "taro-ui";
+import MyPicAndText from "@/components/MyPicAndText/MyPicAndText";
+import {swiperMiddle} from "@/utils/swiperConfig";
 
 
 
@@ -58,7 +60,6 @@ class Home extends Component<HomeProps,HomeState > {
             <AtIcon value='bell' size='20' color='white'/>
           </View>
         </View>
-
         <View className={'tj-header'}>
             <View className={'at-row tj-row'} >
               <View className={'at-col at-col-1 at-col-auto tj-flex'}>热搜</View>
@@ -76,7 +77,7 @@ class Home extends Component<HomeProps,HomeState > {
               </View>
             </View>
           <View className={'tj-swiperBox'}>
-            <Swiper className='test-h' circular autoplay>
+            <Swiper className='test-h' circular autoplay indicatorDots indicatorColor={'white'} indicatorActiveColor={'red'}>
               <SwiperItem>
                 <View className={'tj-swiperItem tj-swiperItem1'}/>
               </SwiperItem>
@@ -88,6 +89,19 @@ class Home extends Component<HomeProps,HomeState > {
               </SwiperItem>
             </Swiper>
           </View>
+        </View>
+        <View style={{marginTop:'20rpx'}}>
+          <Swiper className='tj-swiperBox1' indicatorDots indicatorColor={'white'} indicatorActiveColor={'red'}>
+            {swiperMiddle.map((v,k)=>{
+              return <SwiperItem key={k}>
+                <View className={'tj-swiper-view'}>
+                  {v.map((value,key)=>{
+                    return <MyPicAndText src={value.src} text={value.text} key={k+'-'+key}/>
+                  })}
+                </View>
+              </SwiperItem>
+            })}
+          </Swiper>
         </View>
       </View>
     )

@@ -14,6 +14,7 @@ import Classify from '@/page_components/classify/classify';
 import Home from '@/page_components/home/home'
 // import { } from '../../components'
 
+
 @connect(({ index }) => ({
     index,
 }))
@@ -26,7 +27,7 @@ class Index extends Component<IndexProps,IndexState > {
       "iconfont": "../../iconfont/iconfont"
     },
     enablePullDownRefresh: true,  //开启下拉刷新
-    "backgroundColorTop":'#aaaaaa', //下拉刷新的背景颜色
+    backgroundColorTop:'#aaaaaa', //下拉刷新的背景颜色
     onReachBottomDistance:100, //触发距离离底部100
   }
   constructor(props: IndexProps) {
@@ -70,6 +71,7 @@ class Index extends Component<IndexProps,IndexState > {
     //
     // })
   }
+
 
 
   onShareAppMessage(obj: Taro.ShareAppMessageObject): Taro.ShareAppMessageReturn {

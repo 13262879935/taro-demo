@@ -54,9 +54,9 @@ class ${capPirName} extends Component<${capPirName}Props,${capPirName}State > {
 export default ${capPirName}
 `
 
-// scss文件模版
-const scssTep = `
-${dirName}-wrap {
+// less文件模版
+const lessTep = `
+.${dirName}-wrap {
     width: 100%;
     min-height: 100vh;
 }
@@ -108,7 +108,7 @@ fs.mkdirSync(`./src/pages/${dirName}`); // mkdir $1
 process.chdir(`./src/pages/${dirName}`); // cd $1
 
 fs.writeFileSync(`${dirName}.tsx`, indexTep); //tsx
-fs.writeFileSync(`${dirName}.less`, scssTep); // less
+fs.writeFileSync(`${dirName}.less`, lessTep); // less
 fs.writeFileSync('service.ts', serviceTep); // service
 fs.writeFileSync('model.ts', modelTep); // model
 fs.writeFileSync(`${dirName}.interface.ts`, interfaceTep); // interface

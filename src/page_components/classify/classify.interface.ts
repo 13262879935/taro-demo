@@ -5,7 +5,11 @@
  * @export
  * @interface ClassifyState
  */
-export interface ClassifyState {}
+export interface ClassifyState {
+  screenWidth:number
+  screenHeight:number
+
+}
 
 /**
  * classify.props 参数类型

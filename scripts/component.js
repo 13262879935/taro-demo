@@ -17,7 +17,7 @@ if (!dirName) {
 const indexTep = `import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { ${capPirName}Props, ${capPirName}State } from './${dirName}.interface'
-import './${dirName}.scss'
+import './${dirName}.less'
 
 class ${capPirName} extends Component<${capPirName}Props,${capPirName}State > {
   constructor(props: ${capPirName}Props) {
@@ -31,7 +31,7 @@ class ${capPirName} extends Component<${capPirName}Props,${capPirName}State > {
 
   render() {
     return (
-      <View className='fx-${dirName}-wrap'>
+      <View className='tj-${dirName}-wrap'>
 
       </View>
     )
@@ -41,9 +41,9 @@ class ${capPirName} extends Component<${capPirName}Props,${capPirName}State > {
 export default ${capPirName}
 `
 
-// scss文件模版
-const scssTep = `
-${dirName}-wrap {
+// less文件模版
+const lessTep = `
+.tj-${dirName}-wrap {
     width: 100%;
  }
 `
@@ -70,5 +70,5 @@ fs.mkdirSync(`./src/components/${dirName}`); // mkdir $1
 process.chdir(`./src/components/${dirName}`); // cd $1
 
 fs.writeFileSync(`${dirName}.tsx`, indexTep); //tsx
-fs.writeFileSync(`${dirName}.scss`, scssTep); // scss
+fs.writeFileSync(`${dirName}.less`, lessTep); // less
 fs.writeFileSync(`${dirName}.interface.ts`, interfaceTep); // interface
